@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace TeamMatePro\Contracts\GpsVehicleTracker;
 
 use DateTimeInterface;
-use TeamMatePro\Contracts\GpsVehicleTracker\VehicleInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 use TeamMatePro\Contracts\Model\CoordinatesInterface;
 
+#[Groups([VehicleInterface::class, CoordinatesInterface::class])]
 final class Vehicle implements VehicleInterface
 {
     /**

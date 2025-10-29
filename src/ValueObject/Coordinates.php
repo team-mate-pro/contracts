@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TeamMatePro\Contracts\ValueObject;
 
 use InvalidArgumentException;
+use Symfony\Component\Serializer\Attribute\Groups;
 use TeamMatePro\Contracts\Model\CoordinatesInterface;
 
 final readonly class Coordinates implements CoordinatesInterface
@@ -22,11 +23,13 @@ final readonly class Coordinates implements CoordinatesInterface
         }
     }
 
+    #[Groups([CoordinatesInterface::class])]
     public function getLatitude(): float
     {
         return $this->latitude ?? 0.0;
     }
 
+    #[Groups([CoordinatesInterface::class])]
     public function getLongitude(): float
     {
         return $this->longitude ?? 0.0;
