@@ -41,24 +41,91 @@ Contracts for vehicle tracking systems:
 
 ## Development Commands
 
-Install dependencies:
+This project uses a comprehensive Makefile system. Run `make help` to see all available commands.
+
+**Note:** Some make commands rely on composer scripts (e.g., `phpcs:fix`, `phpcs:check`) that need to be configured in `composer.json`. If make commands fail with "no commands defined" errors, the required composer scripts may need to be added.
+
+### Quick Reference (Primary Commands)
+
+**Quality Checks & Tests:**
 ```bash
-composer install
+make check        # [c] Run all checks (phpcs, phpstan, tests) - CI/CD equivalent
+make check_fast   # [cf] Fast checks (phpcs_fix, phpcs, phpstan) - skip heavy tests
+make fix          # [f] Auto-fix code styling issues
+make tests        # [t] Run all tests (currently: unit tests)
 ```
 
-Update dependencies:
+**Code Styling (PHPCS):**
 ```bash
-composer update
+make phpcs        # [cs] Check code styling
+make phpcs_fix    # [csf] Auto-fix styling issues
+make phpcs_file FILE=src/Model/IdAware.php  # Check specific file
+make phpcs_fix_file FILE=src/Model/IdAware.php  # Fix specific file
 ```
 
-Validate composer.json:
+**Static Analysis (PHPStan):**
 ```bash
-composer validate
+make phpstan              # [ps] Run PHPStan with cache warmup
+make phpstan_analyze      # [psa] Run analysis without cache warmup
+make phpstan_clear        # [psc] Clear result cache
+make phpstan_file FILE=src/Model/IdAware.php  # Analyze specific file
+make phpstan_baseline     # [psb] Generate baseline file
 ```
 
-Dump autoloader:
+**Tests (PHPUnit):**
 ```bash
-composer dump-autoload
+make tests_unit           # [tu] Run unit tests
+make tests_coverage       # [tcov] Generate HTML coverage report
+make tests_file FILE=tests/Unit/ExampleTest.php  # Run specific test file
+make tests_filter FILTER=testMethodName  # Run tests matching pattern
+make tests_testdox        # [tdox] Run with testdox format
+make tests_verbose        # [tv] Run with verbose output
+```
+
+**Docker (if needed):**
+```bash
+make start        # Full start and rebuild containers
+make fast         # Fast start (no rebuild)
+make stop         # Stop containers
+make docker_bash  # [dbash] Open bash in app container
+```
+
+**Git Commands (shortcuts):**
+```bash
+make git_status       # [gs] Show working tree status
+make git_diff         # [gd] Show unstaged changes
+make git_log          # [gl] Show recent commits
+make git_branches     # [gb] List local branches
+```
+
+### Composer Commands
+
+For dependency management, use composer directly:
+```bash
+composer install          # Install dependencies
+composer update           # Update dependencies
+composer validate         # Validate composer.json
+composer dump-autoload    # Regenerate autoloader
+```
+
+### Workflow Examples
+
+**Before committing:**
+```bash
+make fix          # Auto-fix styling
+make check_fast   # Quick validation
+```
+
+**Full CI/CD validation:**
+```bash
+make check        # Run all checks that run in CI/CD
+```
+
+**Development cycle:**
+```bash
+make phpstan              # Static analysis
+make tests_unit           # Run unit tests
+make tests_coverage       # Check coverage
 ```
 
 ## File Structure Pattern

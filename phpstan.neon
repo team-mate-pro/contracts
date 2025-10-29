@@ -1,0 +1,27 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/spaze/phpstan-disallowed-calls/extension.neon
+parameters:
+    level: max
+
+    bootstrapFiles:
+        - tests/bootstrap.php
+
+    paths:
+        - src/
+        - tests/
+
+    disallowedFunctionCalls:
+        -
+            function: 'var_dump()'
+            message: 'use logger instead'
+        -
+            function: 'print_r()'
+            message: 'use logger instead'
+        -
+            function: 'dd()'
+            message: 'dumps are not allowed'
+        -
+            function: 'dump()'
+            message: 'dumps are not allowed'

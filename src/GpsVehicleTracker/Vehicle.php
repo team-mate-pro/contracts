@@ -2,50 +2,69 @@
 
 declare(strict_types=1);
 
-namespace GpsVehicleTracker;
+namespace TeamMatePro\Contracts\GpsVehicleTracker;
 
-use Model\CoordinatesInterface;
+use DateTimeInterface;
+use TeamMatePro\Contracts\GpsVehicleTracker\VehicleInterface;
+use TeamMatePro\Contracts\Model\CoordinatesInterface;
 
 final class Vehicle implements VehicleInterface
 {
+    public function __construct(
+        private readonly string $id,
+        private readonly int $odometerReading,
+        private readonly int $speed,
+        private readonly DateTimeInterface $date,
+        private readonly ?string $displayName = null,
+        private readonly ?string $vin = null,
+        private readonly ?string $registrationNumber = null,
+        private readonly ?CoordinatesInterface $coordinates = null,
+        private readonly array $metaData = [],
+    ) {
+    }
 
     public function getDisplayName(): string
     {
-        // TODO: Implement getDisplayName() method.
+        return $this->displayName ?? $this->id;
     }
 
     public function getId(): string
     {
-        // TODO: Implement getId() method.
+        return $this->id;
     }
 
     public function getMetaData(): array
     {
-        // TODO: Implement getMetaData() method.
+        return $this->metaData;
     }
 
     public function getVin(): ?string
     {
-        // TODO: Implement getVin() method.
+        return $this->vin;
     }
 
     public function getRegistrationNumber(): ?string
     {
-        // TODO: Implement getRegistrationNumber() method.
+        return $this->registrationNumber;
     }
 
     public function getCoordinates(): ?CoordinatesInterface
     {
-        // TODO: Implement getCoordinates() method.
+        return $this->coordinates;
     }
 
     public function getOdometerReading(): int
     {
-        // TODO: Implement getOdometerReading() method.
+        return $this->odometerReading;
     }
 
     public function getSpeed(): int
     {
-        // TODO: Implement getSpeed() method.
+        return $this->speed;
+    }
+
+    public function getDate(): DateTimeInterface
+    {
+        return $this->date;
     }
 }

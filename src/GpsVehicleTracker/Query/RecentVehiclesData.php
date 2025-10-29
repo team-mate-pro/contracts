@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace GpsVehicleTracker\Query;
+namespace TeamMatePro\Contracts\GpsVehicleTracker\Query;
 
-use GpsVehicleTracker\VehicleInterface;
+use TeamMatePro\Contracts\GpsVehicleTracker\VehicleInterface;
 
 interface RecentVehiclesData
 {

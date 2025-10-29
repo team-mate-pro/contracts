@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace GpsVehicleTracker;
+namespace TeamMatePro\Contracts\GpsVehicleTracker;
 
 use DateTimeInterface;
-use Model\CoordinatesInterface;
-use Model\DisplayNameAware;
-use Model\IdAware;
+use TeamMatePro\Contracts\Model\CoordinatesInterface;
+use TeamMatePro\Contracts\Model\DisplayNameAware;
+use TeamMatePro\Contracts\Model\IdAware;
 
 interface VehicleInterface extends IdAware, DisplayNameAware
 {

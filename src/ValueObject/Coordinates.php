@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace ValueObject;
+namespace TeamMatePro\Contracts\ValueObject;
 
 use InvalidArgumentException;
-use Model\CoordinatesInterface;
+use TeamMatePro\Contracts\Model\CoordinatesInterface;
 
 final readonly class Coordinates implements CoordinatesInterface
 {

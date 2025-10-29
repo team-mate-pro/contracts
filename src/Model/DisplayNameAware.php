@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Model;
+namespace TeamMatePro\Contracts\Model;
 
 /**
  * Returns display name that can be used within an app.
