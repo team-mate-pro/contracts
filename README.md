@@ -6,6 +6,8 @@ PHP 8.2+ shared interfaces and value objects for TeamMatePro projects.
 
 ```bash
 composer require team-mate-pro/contracts
+
+composer require "team-mate-pro/contracts:dev-main as 1.0.x-dev" # in case of conflict
 ```
 
 ## Usage

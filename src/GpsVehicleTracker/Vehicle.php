@@ -7,23 +7,26 @@ namespace TeamMatePro\Contracts\GpsVehicleTracker;
 use DateTimeInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 use TeamMatePro\Contracts\Model\CoordinatesInterface;
+use TeamMatePro\Contracts\Model\VehicleInterface;
 
 #[Groups([VehicleInterface::class, CoordinatesInterface::class])]
-final class Vehicle implements VehicleInterface
+final readonly class Vehicle implements VehicleInterface
 {
     /**
      * @param array<string, mixed> $metaData
      */
     public function __construct(
-        private readonly string $id,
-        private readonly int $odometerReading,
-        private readonly int $speed,
-        private readonly DateTimeInterface $date,
-        private readonly ?string $displayName = null,
-        private readonly ?string $vin = null,
-        private readonly ?string $registrationNumber = null,
-        private readonly ?CoordinatesInterface $coordinates = null,
-        private readonly array $metaData = [],
+        private string $id,
+        private int $odometerReading,
+        private int $speed,
+        private DateTimeInterface $date,
+        private int $fuelLevel = 0,
+        private ?string $displayName = null,
+        private ?string $vin = null,
+        private ?string $registrationNumber = null,
+        private ?string $externalId = null,
+        private ?CoordinatesInterface $coordinates = null,
+        private array $metaData = [],
     ) {
     }
 
@@ -73,5 +76,15 @@ final class Vehicle implements VehicleInterface
     public function getDate(): DateTimeInterface
     {
         return $this->date;
+    }
+
+    public function getExternalId(): ?string
+    {
+        return $this->externalId;
+    }
+
+    public function getFuelLevel(): int
+    {
+        return $this->fuelLevel;
     }
 }

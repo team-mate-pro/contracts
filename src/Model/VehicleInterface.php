@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TeamMatePro\Contracts\GpsVehicleTracker;
+namespace TeamMatePro\Contracts\Model;
 
 use DateTimeInterface;
-use TeamMatePro\Contracts\Model\CoordinatesInterface;
-use TeamMatePro\Contracts\Model\DisplayNameAware;
-use TeamMatePro\Contracts\Model\IdAware;
 
-interface VehicleInterface extends IdAware, DisplayNameAware
+interface VehicleInterface extends IdAware, DisplayNameAware, ExternalIdAware
 {
     /**
      * Should return all data passed from the original component
@@ -29,4 +26,6 @@ interface VehicleInterface extends IdAware, DisplayNameAware
     public function getSpeed(): int;
 
     public function getDate(): DateTimeInterface;
+
+    public function getFuelLevel(): int;
 }
