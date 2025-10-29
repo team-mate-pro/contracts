@@ -16,7 +16,7 @@ use TeamMatePro\Contracts\ValueObject\Coordinates;
 final class VehicleTest extends TestCase
 {
     #[Test]
-    public function it_creates_vehicle_with_required_parameters(): void
+    public function itCreatesVehicleWithRequiredParameters(): void
     {
         $date = new DateTimeImmutable('2025-10-29 12:00:00');
         $vehicle = new Vehicle(
@@ -38,7 +38,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_creates_vehicle_with_all_parameters(): void
+    public function itCreatesVehicleWithAllParameters(): void
     {
         $date = new DateTimeImmutable('2025-10-29 12:00:00');
         $coordinates = new Coordinates(45.5, 12.3);
@@ -68,7 +68,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_returns_id_as_display_name_when_display_name_is_null(): void
+    public function itReturnsIdAsDisplayNameWhenDisplayNameIsNull(): void
     {
         $vehicle = new Vehicle(
             id: 'vehicle-789',
@@ -81,7 +81,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_returns_custom_display_name_when_provided(): void
+    public function itReturnsCustomDisplayNameWhenProvided(): void
     {
         $vehicle = new Vehicle(
             id: 'vehicle-789',
@@ -95,7 +95,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_stores_coordinates_correctly(): void
+    public function itStoresCoordinatesCorrectly(): void
     {
         $coordinates = new Coordinates(52.5200, 13.4050);
 
@@ -114,7 +114,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_zero_odometer_reading(): void
+    public function itHandlesZeroOdometerReading(): void
     {
         $vehicle = new Vehicle(
             id: 'new-vehicle',
@@ -127,7 +127,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_zero_speed(): void
+    public function itHandlesZeroSpeed(): void
     {
         $vehicle = new Vehicle(
             id: 'parked-vehicle',
@@ -140,7 +140,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_high_speed_values(): void
+    public function itHandlesHighSpeedValues(): void
     {
         $vehicle = new Vehicle(
             id: 'fast-vehicle',
@@ -153,7 +153,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_high_odometer_readings(): void
+    public function itHandlesHighOdometerReadings(): void
     {
         $vehicle = new Vehicle(
             id: 'old-vehicle',
@@ -166,7 +166,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_preserves_date_instance(): void
+    public function itPreservesDateInstance(): void
     {
         $date = new DateTimeImmutable('2025-10-29 14:30:00');
         $vehicle = new Vehicle(
@@ -181,7 +181,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_stores_empty_metadata_array_by_default(): void
+    public function itStoresEmptyMetadataArrayByDefault(): void
     {
         $vehicle = new Vehicle(
             id: 'vehicle-meta',
@@ -195,7 +195,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_stores_complex_metadata(): void
+    public function itStoresComplexMetadata(): void
     {
         $metaData = [
             'brand' => 'Tesla',
@@ -220,7 +220,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_is_readonly_and_properties_cannot_be_modified(): void
+    public function itIsReadonlyAndPropertiesCannotBeModified(): void
     {
         $vehicle = new Vehicle(
             id: 'immutable-vehicle',
@@ -239,7 +239,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_accepts_datetime_interface_implementations(): void
+    public function itAcceptsDatetimeInterfaceImplementations(): void
     {
         $dateTime = new DateTimeImmutable('2025-10-29 15:45:30');
 
@@ -255,7 +255,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_null_vin(): void
+    public function itHandlesNullVin(): void
     {
         $vehicle = new Vehicle(
             id: 'no-vin-vehicle',
@@ -269,7 +269,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_null_registration_number(): void
+    public function itHandlesNullRegistrationNumber(): void
     {
         $vehicle = new Vehicle(
             id: 'no-reg-vehicle',
@@ -283,7 +283,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_valid_vin_format(): void
+    public function itHandlesValidVinFormat(): void
     {
         $vin = '1HGBH41JXMN109186';
         $vehicle = new Vehicle(
@@ -298,7 +298,7 @@ final class VehicleTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_registration_number_with_dashes(): void
+    public function itHandlesRegistrationNumberWithDashes(): void
     {
         $registration = 'ABC-1234';
         $vehicle = new Vehicle(

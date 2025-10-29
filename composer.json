@@ -34,6 +34,8 @@
     "scripts": {
         "phpunit": "APP_ENV=test ./vendor/bin/phpunit tests --testdox --colors=always",
         "tests:unit": "@phpunit",
+        "phpcs": "php ./vendor/bin/phpcs --standard=phpcs.xml --exclude=Generic.Files.LineLength",
+        "phpcs:fix": "php ./vendor/bin/phpcbf --standard=phpcs.xml --exclude=Generic.Files.LineLength",
         "phpstan": "php vendor/phpstan/phpstan/phpstan analyse --memory-limit=1G"
     }
 }

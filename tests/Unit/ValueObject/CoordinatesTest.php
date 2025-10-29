@@ -15,7 +15,7 @@ use TeamMatePro\Contracts\ValueObject\Coordinates;
 final class CoordinatesTest extends TestCase
 {
     #[Test]
-    public function it_creates_coordinates_with_valid_latitude_and_longitude(): void
+    public function itCreatesCoordinatesWithValidLatitudeAndLongitude(): void
     {
         $coordinates = new Coordinates(45.5, 12.3);
 
@@ -24,7 +24,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_creates_coordinates_with_null_values(): void
+    public function itCreatesCoordinatesWithNullValues(): void
     {
         $coordinates = new Coordinates();
 
@@ -33,7 +33,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_creates_coordinates_with_only_latitude(): void
+    public function itCreatesCoordinatesWithOnlyLatitude(): void
     {
         $coordinates = new Coordinates(45.5, null);
 
@@ -42,7 +42,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_creates_coordinates_with_only_longitude(): void
+    public function itCreatesCoordinatesWithOnlyLongitude(): void
     {
         $coordinates = new Coordinates(null, 12.3);
 
@@ -52,7 +52,7 @@ final class CoordinatesTest extends TestCase
 
     #[Test]
     #[DataProvider('validLatitudeProvider')]
-    public function it_accepts_valid_latitude_values(?float $latitude): void
+    public function itAcceptsValidLatitudeValues(?float $latitude): void
     {
         $coordinates = new Coordinates($latitude, 0.0);
 
@@ -61,7 +61,7 @@ final class CoordinatesTest extends TestCase
 
     #[Test]
     #[DataProvider('validLongitudeProvider')]
-    public function it_accepts_valid_longitude_values(?float $longitude): void
+    public function itAcceptsValidLongitudeValues(?float $longitude): void
     {
         $coordinates = new Coordinates(0.0, $longitude);
 
@@ -70,7 +70,7 @@ final class CoordinatesTest extends TestCase
 
     #[Test]
     #[DataProvider('invalidLatitudeProvider')]
-    public function it_throws_exception_for_invalid_latitude(float $latitude): void
+    public function itThrowsExceptionForInvalidLatitude(float $latitude): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid latitude');
@@ -80,7 +80,7 @@ final class CoordinatesTest extends TestCase
 
     #[Test]
     #[DataProvider('invalidLongitudeProvider')]
-    public function it_throws_exception_for_invalid_longitude(float $longitude): void
+    public function itThrowsExceptionForInvalidLongitude(float $longitude): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid longitude');
@@ -89,7 +89,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_converts_to_string_with_both_values(): void
+    public function itConvertsToStringWithBothValues(): void
     {
         $coordinates = new Coordinates(45.5, 12.3);
 
@@ -97,7 +97,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_converts_to_string_with_null_values(): void
+    public function itConvertsToStringWithNullValues(): void
     {
         $coordinates = new Coordinates();
 
@@ -105,7 +105,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_converts_to_string_with_zero_values(): void
+    public function itConvertsToStringWithZeroValues(): void
     {
         $coordinates = new Coordinates(0.0, 0.0);
 
@@ -113,7 +113,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_is_readonly_and_immutable(): void
+    public function itIsReadonlyAndImmutable(): void
     {
         $coordinates = new Coordinates(45.5, 12.3);
 
@@ -125,7 +125,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_boundary_latitude_values(): void
+    public function itHandlesBoundaryLatitudeValues(): void
     {
         $minCoordinates = new Coordinates(-90.0, 0.0);
         $maxCoordinates = new Coordinates(90.0, 0.0);
@@ -135,7 +135,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_boundary_longitude_values(): void
+    public function itHandlesBoundaryLongitudeValues(): void
     {
         $minCoordinates = new Coordinates(0.0, -180.0);
         $maxCoordinates = new Coordinates(0.0, 180.0);
