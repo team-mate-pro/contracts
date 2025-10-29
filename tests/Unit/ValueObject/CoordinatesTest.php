@@ -144,6 +144,9 @@ final class CoordinatesTest extends TestCase
         $this->assertSame(180.0, $maxCoordinates->getLongitude());
     }
 
+    /**
+     * @return array<string, array{0: ?float}>
+     */
     public static function validLatitudeProvider(): array
     {
         return [
@@ -156,6 +159,9 @@ final class CoordinatesTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: ?float}>
+     */
     public static function validLongitudeProvider(): array
     {
         return [
@@ -168,6 +174,9 @@ final class CoordinatesTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: float}>
+     */
     public static function invalidLatitudeProvider(): array
     {
         return [
@@ -178,6 +187,9 @@ final class CoordinatesTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: float}>
+     */
     public static function invalidLongitudeProvider(): array
     {
         return [

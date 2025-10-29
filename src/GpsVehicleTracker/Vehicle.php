@@ -10,6 +10,9 @@ use TeamMatePro\Contracts\Model\CoordinatesInterface;
 
 final class Vehicle implements VehicleInterface
 {
+    /**
+     * @param array<string, mixed> $metaData
+     */
     public function __construct(
         private readonly string $id,
         private readonly int $odometerReading,
@@ -33,6 +36,9 @@ final class Vehicle implements VehicleInterface
         return $this->id;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getMetaData(): array
     {
         return $this->metaData;
