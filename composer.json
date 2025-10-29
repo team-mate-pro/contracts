@@ -1,0 +1,24 @@
+{
+    "name": "team-mate-pro/contracts",
+    "description": "A set of contracts in TMP company projects",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "TeamMatePro\\Contracts\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sebastian Twaróg",
+            "email": "sebastian.twarog1989@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "team-mate-pro/make": "dev-main"
+    }
+}
