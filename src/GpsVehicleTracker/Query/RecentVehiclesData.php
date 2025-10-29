@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TeamMatePro\Contracts\GpsVehicleTracker\Query;
 
-use TeamMatePro\Contracts\Model\VehicleInterface;
+use TeamMatePro\Contracts\GpsVehicleTracker\VehicleInterface;
 
 interface RecentVehiclesData
 {
@@ -13,7 +13,7 @@ interface RecentVehiclesData
      * ID = should be an entity representation in internal system,
      * externalId = value from API
      *
-     * @return VehicleInterface[]
+     * @return \TeamMatePro\Contracts\GpsVehicleTracker\VehicleInterface[]
      */
     public function findRecentData(): array;
 
