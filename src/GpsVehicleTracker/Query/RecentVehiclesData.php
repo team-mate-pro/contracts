@@ -13,7 +13,7 @@ interface RecentVehiclesData
      * ID = should be an entity representation in internal system,
      * externalId = value from API
      *
-     * @return \TeamMatePro\Contracts\GpsVehicleTracker\VehicleInterface[]
+     * @return VehicleInterface[]
      */
     public function findRecentData(): array;
 

@@ -12,7 +12,7 @@ use TeamMatePro\Contracts\Model\CoordinatesInterface;
 use function implode;
 
 #[Groups([VehicleInterface::class, CoordinatesInterface::class])]
-final readonly class Address implements Stringable, AddressInterface
+final readonly class Address implements AddressInterface
 {
     public function __construct(
         private ?string $street,
