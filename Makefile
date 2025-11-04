@@ -48,7 +48,7 @@ fast: ### Fast start already built containers
 	$(docker-compose) up -d
 
 stop: ### Stop all existing containers
-	$(docker-compose) down -d
+	$(docker-compose) down
 
 check: ### [c] Should run all mandatory checks that run in CI and CD process
 	make phpcs
