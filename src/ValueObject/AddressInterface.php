@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace TeamMatePro\Contracts\ValueObject;
 
 use Stringable;
-use TeamMatePro\Contracts\Model\CoordinatesInterface;
 
 interface AddressInterface extends Stringable
 {

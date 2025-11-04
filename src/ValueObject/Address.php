@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace TeamMatePro\Contracts\ValueObject;
 
-use Stringable;
 use Symfony\Component\Serializer\Attribute\Groups;
 use TeamMatePro\Contracts\GpsVehicleTracker\VehicleInterface;
-use TeamMatePro\Contracts\Model\CoordinatesInterface;
 
 use function implode;
 

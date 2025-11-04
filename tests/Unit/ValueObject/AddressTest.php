@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use TeamMatePro\Contracts\Model\CoordinatesInterface;
 use TeamMatePro\Contracts\ValueObject\Address;
 use TeamMatePro\Contracts\ValueObject\Coordinates;
 

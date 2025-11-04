@@ -6,7 +6,6 @@ namespace TeamMatePro\Contracts\ValueObject;
 
 use InvalidArgumentException;
 use Symfony\Component\Serializer\Attribute\Groups;
-use TeamMatePro\Contracts\Model\CoordinatesInterface;
 
 final readonly class Coordinates implements CoordinatesInterface
 {

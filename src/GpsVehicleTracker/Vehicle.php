@@ -6,7 +6,7 @@ namespace TeamMatePro\Contracts\GpsVehicleTracker;
 
 use DateTimeInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
-use TeamMatePro\Contracts\Model\CoordinatesInterface;
+use TeamMatePro\Contracts\ValueObject\CoordinatesInterface;
 
 #[Groups([VehicleInterface::class, CoordinatesInterface::class])]
 readonly class Vehicle implements VehicleInterface

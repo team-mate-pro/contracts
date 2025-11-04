@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TeamMatePro\Contracts\Model;
+namespace TeamMatePro\Contracts\ValueObject;
 
 interface CoordinatesInterface
 {
