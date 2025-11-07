@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TeamMatePro\Contracts\Dto;
+namespace TeamMatePro\Contracts\Collection;
 
 use ArrayIterator;
 use IteratorAggregate;

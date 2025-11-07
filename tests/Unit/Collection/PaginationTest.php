@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Dto;
+namespace Tests\Unit\Collection;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use TeamMatePro\Contracts\Dto\Pagination;
+use TeamMatePro\Contracts\Collection\Pagination;
 
 #[CoversClass(Pagination::class)]
 final class PaginationTest extends TestCase
