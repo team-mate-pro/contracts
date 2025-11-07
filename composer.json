@@ -1,6 +1,6 @@
 {
     "name": "team-mate-pro/contracts",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A set of contracts in TMP company projects",
     "type": "library",
     "license": "MIT",

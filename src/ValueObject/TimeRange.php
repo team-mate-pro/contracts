@@ -14,30 +14,30 @@ final readonly class TimeRange implements TimeRangeInterface
     {
     }
 
-    public static function fromString(string $start, string $end): TimeRangeInterface
+    public static function fromString(string $start, string $end): self
     {
         return new self(new DateTimeImmutable($start), new DateTimeImmutable($end));
     }
 
-    public static function fromDuration(DateTimeInterface $start, int $duration): TimeRangeInterface
+    public static function fromDuration(DateTimeInterface $start, int $duration): self
     {
         $start = $start instanceof DateTimeImmutable ? $start : DateTimeImmutable::createFromInterface($start);
         return new self($start, $start->modify("+{$duration} minutes"));
     }
 
-    public static function weeksBelowDate(DateTimeInterface $date, int $weeks): TimeRangeInterface
+    public static function weeksBelowDate(DateTimeInterface $date, int $weeks): self
     {
         /** @phpstan-ignore-next-line */
         $start = $date->modify("-$weeks weeks");
         return new self($start, $date);
     }
 
-    public static function currentMonth(): TimeRangeInterface
+    public static function currentMonth(): self
     {
         return new self((new DateTimeImmutable('first day of this month'))->setTime(0, 0), (new DateTimeImmutable('last day of this month'))->setTime(23, 59));
     }
 
-    public static function currentYear(int $year = 1): TimeRangeInterface
+    public static function currentYear(int $year = 1): self
     {
         $endDate = (new DateTimeImmutable('last day of December this year'))->setTime(23, 59, 59);
         $startDate = (new DateTimeImmutable('first day of January this year'))
@@ -47,7 +47,7 @@ final readonly class TimeRange implements TimeRangeInterface
         return new self($startDate, $endDate);
     }
 
-    public static function previousYear(int $count = 1): TimeRangeInterface
+    public static function previousYear(int $count = 1): self
     {
         $endDate = (new DateTimeImmutable('last day of December last year'))->setTime(23, 59, 59);
         $startDate = (new DateTimeImmutable('first day of January last year'))
@@ -57,7 +57,7 @@ final readonly class TimeRange implements TimeRangeInterface
         return new self($startDate, $endDate);
     }
 
-    public static function quarter(int $quarter, ?int $year = null): TimeRangeInterface
+    public static function quarter(int $quarter, ?int $year = null): self
     {
         if ($quarter < 1 || $quarter > 4) {
             throw new InvalidArgumentException('Quarter must be between 1 and 4, got ' . $quarter);

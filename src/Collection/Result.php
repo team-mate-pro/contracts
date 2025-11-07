@@ -7,6 +7,7 @@ namespace TeamMatePro\Contracts\Collection;
 use ArrayIterator;
 use IteratorAggregate;
 use Traversable;
+
 use function is_iterable;
 
 /**
@@ -29,9 +30,8 @@ final class Result implements IteratorAggregate
 
     private function __construct(
         private readonly ResultType $type,
-        private readonly ?string    $message = null
-    )
-    {
+        private readonly ?string $message = null
+    ) {
     }
 
     /**
