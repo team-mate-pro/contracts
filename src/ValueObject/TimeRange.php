@@ -7,6 +7,7 @@ namespace TeamMatePro\Contracts\ValueObject;
 use DateTimeImmutable;
 use DateTimeInterface;
 use InvalidArgumentException;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 final readonly class TimeRange implements TimeRangeInterface
 {
@@ -81,11 +82,13 @@ final readonly class TimeRange implements TimeRangeInterface
         return new self($startDate, $endDate);
     }
 
+    #[Groups([TimeRangeInterface::class])]
     public function getStart(): DateTimeInterface
     {
         return $this->start;
     }
 
+    #[Groups([TimeRangeInterface::class])]
     public function getEnd(): DateTimeInterface
     {
         return $this->end;
