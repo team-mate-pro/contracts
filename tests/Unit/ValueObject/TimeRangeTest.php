@@ -6,6 +6,7 @@ namespace TeamMatePro\Contracts\Tests\Unit\ValueObject;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use DomainException;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -261,6 +262,70 @@ final class TimeRangeTest extends TestCase
         $this->assertSame('2025-06-30 23:59:59', $timeRange->getEnd()->format('Y-m-d H:i:s'));
     }
 
+    #[Test]
+    public function itThrowsDomainExceptionWhenEndDateIsBeforeStartDate(): void
+    {
+        $start = new DateTimeImmutable('2025-01-31 23:59:59');
+        $end = new DateTimeImmutable('2025-01-01 00:00:00');
+
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('End date (2025-01-01 00:00:00) must not be earlier than start date (2025-01-31 23:59:59)');
+
+        new TimeRange($start, $end);
+    }
+
+    #[Test]
+    public function itThrowsDomainExceptionWhenEndDateIsBeforeStartDateUsingFromString(): void
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('End date (2025-01-01 00:00:00) must not be earlier than start date (2025-12-31 23:59:59)');
+
+        TimeRange::fromString('2025-12-31 23:59:59', '2025-01-01 00:00:00');
+    }
+
+    #[Test]
+    #[DataProvider('invalidTimeRangeProvider')]
+    public function itThrowsDomainExceptionForInvalidTimeRanges(string $start, string $end): void
+    {
+        $this->expectException(DomainException::class);
+
+        TimeRange::fromString($start, $end);
+    }
+
+    #[Test]
+    public function itAllowsEqualStartAndEndDates(): void
+    {
+        $start = new DateTimeImmutable('2025-01-15 12:00:00');
+        $end = new DateTimeImmutable('2025-01-15 12:00:00');
+
+        $timeRange = new TimeRange($start, $end);
+
+        $this->assertSame('2025-01-15 12:00:00', $timeRange->getStart()->format('Y-m-d H:i:s'));
+        $this->assertSame('2025-01-15 12:00:00', $timeRange->getEnd()->format('Y-m-d H:i:s'));
+    }
+
+    #[Test]
+    public function itThrowsDomainExceptionWithOneDayDifference(): void
+    {
+        $start = new DateTimeImmutable('2025-01-02');
+        $end = new DateTimeImmutable('2025-01-01');
+
+        $this->expectException(DomainException::class);
+
+        new TimeRange($start, $end);
+    }
+
+    #[Test]
+    public function itThrowsDomainExceptionWithOneSecondDifference(): void
+    {
+        $start = new DateTimeImmutable('2025-01-01 12:00:01');
+        $end = new DateTimeImmutable('2025-01-01 12:00:00');
+
+        $this->expectException(DomainException::class);
+
+        new TimeRange($start, $end);
+    }
+
     /**
      * @return array<string, array{0: int, 1: int, 2: string, 3: string}>
      */
@@ -286,6 +351,19 @@ final class TimeRangeTest extends TestCase
             'quarter -1' => [-1],
             'quarter 5' => [5],
             'quarter 10' => [10],
+        ];
+    }
+
+    /**
+     * @return array<string, array{0: string, 1: string}>
+     */
+    public static function invalidTimeRangeProvider(): array
+    {
+        return [
+            'end one month before start' => ['2025-02-01 00:00:00', '2025-01-01 00:00:00'],
+            'end one year before start' => ['2025-12-31 23:59:59', '2024-12-31 23:59:59'],
+            'end one hour before start' => ['2025-01-15 14:00:00', '2025-01-15 13:00:00'],
+            'end one minute before start' => ['2025-01-15 12:30:00', '2025-01-15 12:29:00'],
         ];
     }
 }

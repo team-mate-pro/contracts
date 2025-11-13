@@ -6,6 +6,9 @@ namespace TeamMatePro\Contracts\ValueObject;
 
 use DateTimeInterface;
 
+/**
+ * Should throw DomainException when end date is later than start date.
+ */
 interface TimeRangeInterface
 {
     public function getStart(): DateTimeInterface;

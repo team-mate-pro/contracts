@@ -6,6 +6,7 @@ namespace TeamMatePro\Contracts\ValueObject;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use DomainException;
 use InvalidArgumentException;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -13,6 +14,15 @@ final readonly class TimeRange implements TimeRangeInterface
 {
     public function __construct(private DateTimeInterface $start, private DateTimeInterface $end)
     {
+        if ($end < $start) {
+            throw new DomainException(
+                sprintf(
+                    'End date (%s) must not be earlier than start date (%s)',
+                    $end->format('Y-m-d H:i:s'),
+                    $start->format('Y-m-d H:i:s')
+                )
+            );
+        }
     }
 
     public static function fromString(string $start, string $end): self
