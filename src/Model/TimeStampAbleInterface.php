@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TeamMatePro\Contracts\Entity;
+namespace TeamMatePro\Contracts\Model;
 
 use DateTimeInterface;
 
