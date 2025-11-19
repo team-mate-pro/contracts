@@ -38,6 +38,7 @@
         "tests:unit": "@phpunit",
         "phpcs": "php ./vendor/bin/phpcs --standard=phpcs.xml --exclude=Generic.Files.LineLength",
         "phpcs:fix": "php ./vendor/bin/phpcbf --standard=phpcs.xml --exclude=Generic.Files.LineLength",
-        "phpstan": "php vendor/phpstan/phpstan/phpstan analyse --memory-limit=1G"
+        "phpstan": "php vendor/phpstan/phpstan/phpstan analyse --memory-limit=1G",
+        "phpstan:baseline": "php ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --generate-baseline"
     }
 }
