@@ -1,10 +1,14 @@
 FROM php:8.3-cli-alpine
 
-# Install system dependencies
+# Install system dependencies and build tools for PCOV
 RUN apk add --no-cache \
     git \
     unzip \
     bash \
+    $PHPIZE_DEPS
+
+# Install PCOV for code coverage
+RUN pecl install pcov && docker-php-ext-enable pcov
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

@@ -7,11 +7,13 @@ namespace TeamMatePro\Contracts\Tests\Unit\ValueObject;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use TeamMatePro\Contracts\ValueObject\Address;
 use TeamMatePro\Contracts\ValueObject\Coordinates;
 
 #[CoversClass(Address::class)]
+#[UsesClass(Coordinates::class)]
 final class AddressTest extends TestCase
 {
     #[Test]

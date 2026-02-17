@@ -17,7 +17,8 @@ final readonly class Address implements AddressInterface
         private ?string $city,
         private ?string $zipCode,
         private ?string $country = 'PL',
-        private ?CoordinatesInterface $coordinates = null
+        private ?CoordinatesInterface $coordinates = null,
+        private ?string $administrativeArea = null,
     ) {
     }
 
@@ -60,5 +61,10 @@ final readonly class Address implements AddressInterface
     public function getCoordinates(): ?CoordinatesInterface
     {
         return $this->coordinates;
+    }
+
+    public function getAdministrativeArea(): ?string
+    {
+        return $this->administrativeArea;
     }
 }

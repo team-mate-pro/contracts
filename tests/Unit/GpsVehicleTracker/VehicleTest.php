@@ -8,11 +8,13 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use TeamMatePro\Contracts\GpsVehicleTracker\Vehicle;
 use TeamMatePro\Contracts\ValueObject\Coordinates;
 
 #[CoversClass(Vehicle::class)]
+#[UsesClass(Coordinates::class)]
 final class VehicleTest extends TestCase
 {
     #[Test]

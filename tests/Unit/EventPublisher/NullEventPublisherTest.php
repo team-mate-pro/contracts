@@ -6,6 +6,7 @@ namespace TeamMatePro\Contracts\Tests\Unit\EventPublisher;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use TeamMatePro\Contracts\EventPublisher\EventsAwareInterface;
 use TeamMatePro\Contracts\EventPublisher\EventsAwareTrait;
@@ -13,6 +14,7 @@ use TeamMatePro\Contracts\EventPublisher\EventsPublisherInterface;
 use TeamMatePro\Contracts\EventPublisher\NullEventPublisher;
 
 #[CoversClass(NullEventPublisher::class)]
+#[UsesClass(EventsAwareTrait::class)]
 final class NullEventPublisherTest extends TestCase
 {
     #[Test]

@@ -17,4 +17,6 @@ interface AddressInterface extends Stringable
     public function getCountry(): ?string;
 
     public function getCoordinates(): ?CoordinatesInterface;
+
+    public function getAdministrativeArea(): ?string;
 }

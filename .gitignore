@@ -4,3 +4,4 @@ vendor
 /var
 *.cache
 /.phpcs-cache
+.coverage
