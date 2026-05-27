@@ -11,6 +11,14 @@ Wersję uznajemy za wydaną dopiero w momencie jej wdrożenia na środowisko pro
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-05-27
+
+### Added
+- Sprawdzanie progu pokrycia testami w skrypcie `composer tests:unit` — wykorzystuje komendę `tmp:tests` z `team-mate-pro/tests-bundle` (próg minimalny: 91%)
+- `bin/console` oraz `tests/App/Kernel.php` — minimalna infrastruktura Symfony Console wymagana przez `tmp:tests` do uruchomienia PHPUnit oraz weryfikacji raportu Clover
+- Generowanie raportu Clover (`coverage-clover.xml`) w konfiguracji PHPUnit
+- Skrypt `composer tests:coverage` — uruchamia PHPUnit z tekstowym raportem pokrycia
+
 ## [1.3.0] - 2026-05-08
 
 ### Added
@@ -39,7 +47,8 @@ Pierwsza linia wydań biblioteki kontraktów TMP — początkowy scaffolding i s
 ### Fixed
 - Niepoprawne deklaracje przestrzeni nazw (PSR-4) w kilku plikach
 
-[Unreleased]: https://gitlab.team-mate.pl/sh/contracts/-/compare/1.3.0...HEAD
+[Unreleased]: https://gitlab.team-mate.pl/sh/contracts/-/compare/1.3.1...HEAD
+[1.3.1]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.3.1
 [1.3.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.3.0
 [1.2.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.2.0
 [1.1.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.1.0

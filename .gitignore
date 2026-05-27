@@ -5,3 +5,4 @@ vendor
 *.cache
 /.phpcs-cache
 .coverage
+coverage-clover.xml
