@@ -11,6 +11,15 @@ Wersję uznajemy za wydaną dopiero w momencie jej wdrożenia na środowisko pro
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-05-27
+
+### Added
+- `Result::map(callable $callback): self` (`src/Collection/`) — zwraca nowy `Result` z danymi przekształconymi przez callback; zachowuje `itemType`, `meta` oraz `errorCode`; nie mutuje oryginału; rzuca `LogicException`, gdy mapowanie kolekcji zwróci wartość nie-array
+- `Result::getDataType(): array{fqcn: class-string, shortName: string}|null` — rozpoznaje typ wpisu w payload (pojedynczy obiekt, kolekcja obiektów lub `PaginatedCollection<object>`); zwraca `null` dla danych skalarowych, pustej kolekcji oraz braku danych — pozwala renderom (np. REST) wyciągnąć `type` metadata bez własnej logiki na `get_class`/`reflection`
+
+### Changed
+- `Result::withCollection()` — parametr rozluźniony do `array<int|string, mixed>` (akceptuje dowolny array), zwracany typ generyczny ujednolicony do `self<array<string|int, mixed>|object>` (spójnie z `withItem()`), dzięki czemu `map()` może deklarować jeden typ zwrotny niezależnie od gałęzi `item`/`collection`
+
 ## [1.4.0] - 2026-05-27
 
 ### Added
@@ -60,7 +69,8 @@ Pierwsza linia wydań biblioteki kontraktów TMP — początkowy scaffolding i s
 ### Fixed
 - Niepoprawne deklaracje przestrzeni nazw (PSR-4) w kilku plikach
 
-[Unreleased]: https://gitlab.team-mate.pl/sh/contracts/-/compare/1.4.0...HEAD
+[Unreleased]: https://gitlab.team-mate.pl/sh/contracts/-/compare/1.5.0...HEAD
+[1.5.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.5.0
 [1.4.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.4.0
 [1.3.1]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.3.1
 [1.3.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.3.0
