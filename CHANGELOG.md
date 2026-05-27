@@ -11,6 +11,11 @@ Wersję uznajemy za wydaną dopiero w momencie jej wdrożenia na środowisko pro
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-05-27
+
+### Removed (BREAKING)
+- `Result::with($item)` (`src/Collection/`) — generyczny setter usunięty wraz z całym `@deprecated` od 1.4.0; należy korzystać z `Result::withItem(array|object)` lub `Result::withCollection(array)`, które są typowo precyzyjne i ustawiają `itemType`
+
 ## [1.5.0] - 2026-05-27
 
 ### Added
@@ -69,7 +74,8 @@ Pierwsza linia wydań biblioteki kontraktów TMP — początkowy scaffolding i s
 ### Fixed
 - Niepoprawne deklaracje przestrzeni nazw (PSR-4) w kilku plikach
 
-[Unreleased]: https://gitlab.team-mate.pl/sh/contracts/-/compare/1.5.0...HEAD
+[Unreleased]: https://gitlab.team-mate.pl/sh/contracts/-/compare/2.0.0...HEAD
+[2.0.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/2.0.0
 [1.5.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.5.0
 [1.4.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.4.0
 [1.3.1]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.3.1

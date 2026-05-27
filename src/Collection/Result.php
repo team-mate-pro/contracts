@@ -46,17 +46,6 @@ final class Result implements IteratorAggregate
     }
 
     /**
-     * @deprecated - use withItem or withCollection instead
-     * @param T $item
-     * @return self<T>
-     */
-    public function with($item): self
-    {
-        $this->data = $item;
-        return $this;
-    }
-
-    /**
      * @param array<string|int, mixed>|object $item
      * @return self<array<string|int, mixed>|object>
      */

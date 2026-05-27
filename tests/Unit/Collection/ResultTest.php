@@ -99,13 +99,6 @@ final class ResultTest extends TestCase
         $this->assertNull(Result::create()->getDataType());
     }
 
-    public function testGetDataTypeIsNullForScalarPayload(): void
-    {
-        $sut = Result::create()->with('plain string');
-
-        $this->assertNull($sut->getDataType());
-    }
-
     public function testGetDataTypeIsNullForEmptyArray(): void
     {
         $sut = Result::create()->withCollection([]);
@@ -143,7 +136,7 @@ final class ResultTest extends TestCase
     public function testGetDataTypeForPaginatedCollection(): void
     {
         $collection = new PaginatedCollection([new stdClass()], 1, new Pagination(0, 10));
-        $sut = Result::create()->with($collection);
+        $sut = Result::create()->withItem($collection);
 
         $this->assertSame(
             ['fqcn' => stdClass::class, 'shortName' => 'stdClass'],
@@ -154,7 +147,7 @@ final class ResultTest extends TestCase
     public function testGetDataTypeIsNullForEmptyPaginatedCollection(): void
     {
         $collection = new PaginatedCollection([], 0, new Pagination(0, 10));
-        $sut = Result::create()->with($collection);
+        $sut = Result::create()->withItem($collection);
 
         $this->assertNull($sut->getDataType());
     }
