@@ -21,6 +21,9 @@ final class Result implements IteratorAggregate
      */
     private $data;
 
+    /** @var 'item'|'collection' */
+    private string $itemType = 'item';
+
     /**
      * @var array<string, mixed>
      */
@@ -43,6 +46,7 @@ final class Result implements IteratorAggregate
     }
 
     /**
+     * @deprecated - use withItem or withCollection instead
      * @param T $item
      * @return self<T>
      */
@@ -50,6 +54,32 @@ final class Result implements IteratorAggregate
     {
         $this->data = $item;
         return $this;
+    }
+
+    /**
+     * @param array<string|int, mixed>|object $item
+     * @return self<array<string|int, mixed>|object>
+     */
+    public function withItem(array|object $item): self
+    {
+        /** @var self<array<string|int, mixed>|object> $self */
+        $self = $this;
+        $self->data = $item;
+        $self->itemType = 'item';
+        return $self;
+    }
+
+    /**
+     * @param array<int|string, array<int|string, mixed>|object> $collection
+     * @return self<array<int|string, array<int|string, mixed>|object>>
+     */
+    public function withCollection(array $collection): self
+    {
+        /** @var self<array<int|string, array<int|string, mixed>|object>> $self */
+        $self = $this;
+        $self->data = $collection;
+        $self->itemType = 'collection';
+        return $self;
     }
 
     /**
@@ -116,5 +146,13 @@ final class Result implements IteratorAggregate
         }
 
         return new ArrayIterator([$this->data]);
+    }
+
+    /**
+     * @return 'item'|'collection'
+     */
+    public function getItemType(): string
+    {
+        return $this->itemType;
     }
 }

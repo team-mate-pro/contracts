@@ -11,6 +11,19 @@ Wersję uznajemy za wydaną dopiero w momencie jej wdrożenia na środowisko pro
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-05-27
+
+### Added
+- `Result::withItem(array|object $item)` oraz `Result::withCollection(array $collection)` (`src/Collection/`) — jawne mutatory rozróżniające pojedynczy element od kolekcji, ze zwężeniem typu generycznego `Result<…>` w PHPDoc, dla lepszego rozpoznawania danych po stronie konsumentów (np. renderera REST API)
+- `Result::getItemType(): 'item'|'collection'` — pozwala konsumentom rozróżnić, czy `Result` zawiera pojedynczy obiekt, czy kolekcję, bez zgadywania na podstawie kształtu `data`
+- `tests/Unit/Collection/ResultTest.php` — testy jednostkowe nowych metod `Result`
+
+### Deprecated
+- `Result::with($item)` — generyczny setter pozostaje dla kompatybilności wstecznej; nowe użycia powinny korzystać z `withItem()` lub `withCollection()`
+
+### Changed
+- `phpstan.neon` — usunięte ręczne wpisy `includes:` dla `phpstan-phpunit` i `phpstan-symfony`; rozszerzenia są teraz rejestrowane automatycznie przez `phpstan/extension-installer` (dodany jako require-dev w 1.3.1)
+
 ## [1.3.1] - 2026-05-27
 
 ### Added
@@ -47,7 +60,8 @@ Pierwsza linia wydań biblioteki kontraktów TMP — początkowy scaffolding i s
 ### Fixed
 - Niepoprawne deklaracje przestrzeni nazw (PSR-4) w kilku plikach
 
-[Unreleased]: https://gitlab.team-mate.pl/sh/contracts/-/compare/1.3.1...HEAD
+[Unreleased]: https://gitlab.team-mate.pl/sh/contracts/-/compare/1.4.0...HEAD
+[1.4.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.4.0
 [1.3.1]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.3.1
 [1.3.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.3.0
 [1.2.0]: https://gitlab.team-mate.pl/sh/contracts/-/tags/1.2.0

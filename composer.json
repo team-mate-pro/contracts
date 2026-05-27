@@ -1,6 +1,6 @@
 {
     "name": "team-mate-pro/contracts",
-    "version": "1.3.1",
+    "version": "1.4.0",
     "description": "A set of contracts in TMP company projects",
     "type": "library",
     "license": "MIT",
@@ -40,7 +40,7 @@
     },
     "scripts": {
         "phpunit": "APP_ENV=test ./vendor/bin/phpunit tests --testdox --colors=always",
-        "tests:unit": "APP_ENV=test php bin/console tmp:tests --suite Unit --no-warmup --coverage 91",
+        "tests:unit": "APP_ENV=test php bin/console tmp:tests --suite Unit --no-warmup --coverage 93",
         "tests:coverage": "APP_ENV=test ./vendor/bin/phpunit --testdox --colors=always --coverage-text",
         "phpcs": "php ./vendor/bin/phpcs --standard=phpcs.xml --exclude=Generic.Files.LineLength",
         "phpcs:fix": "php ./vendor/bin/phpcbf --standard=phpcs.xml --exclude=Generic.Files.LineLength",
