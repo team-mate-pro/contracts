@@ -25,7 +25,6 @@ final class MoneyTest extends TestCase
 
         $this->assertSame(19.99, $money->getAmount());
         $this->assertSame(Currency::USD, $money->getCurrency());
-        $this->assertInstanceOf(MoneyInterface::class, $money);
     }
 
     #[Test]
@@ -142,7 +141,6 @@ final class MoneyTest extends TestCase
             $money = new Money(100.00, $currency);
             $this->assertSame(100.00, $money->getAmount());
             $this->assertSame($currency, $money->getCurrency());
-            $this->assertIsString((string) $money);
         }
     }
 

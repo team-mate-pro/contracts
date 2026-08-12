@@ -34,8 +34,6 @@ final class TimeRangeTest extends TestCase
     {
         $timeRange = TimeRange::fromString('2025-01-01 00:00:00', '2025-01-31 23:59:59');
 
-        $this->assertInstanceOf(DateTimeInterface::class, $timeRange->getStart());
-        $this->assertInstanceOf(DateTimeInterface::class, $timeRange->getEnd());
         $this->assertSame('2025-01-01 00:00:00', $timeRange->getStart()->format('Y-m-d H:i:s'));
         $this->assertSame('2025-01-31 23:59:59', $timeRange->getEnd()->format('Y-m-d H:i:s'));
     }
@@ -225,21 +223,22 @@ final class TimeRangeTest extends TestCase
         $this->assertSame($end, $timeRange->getEnd());
 
         // Readonly class ensures immutability
-        $this->assertTrue(true);
     }
 
     #[Test]
     public function itReturnsDateTimeImmutableFromFactoryMethods(): void
     {
-        $timeRange1 = TimeRange::fromString('2025-01-01', '2025-01-31');
-        $timeRange2 = TimeRange::fromDuration(new DateTimeImmutable('2025-01-01'), 60);
-        $timeRange3 = TimeRange::currentMonth();
-        $timeRange4 = TimeRange::quarter(1, 2025);
+        $ranges = [
+            TimeRange::fromString('2025-01-01', '2025-01-31'),
+            TimeRange::fromDuration(new DateTimeImmutable('2025-01-01'), 60),
+            TimeRange::currentMonth(),
+            TimeRange::quarter(1, 2025),
+        ];
 
-        $this->assertInstanceOf(DateTimeInterface::class, $timeRange1->getStart());
-        $this->assertInstanceOf(DateTimeInterface::class, $timeRange2->getStart());
-        $this->assertInstanceOf(DateTimeInterface::class, $timeRange3->getStart());
-        $this->assertInstanceOf(DateTimeInterface::class, $timeRange4->getStart());
+        foreach ($ranges as $range) {
+            $this->assertInstanceOf(DateTimeImmutable::class, $range->getStart());
+            $this->assertInstanceOf(DateTimeImmutable::class, $range->getEnd());
+        }
     }
 
     #[Test]

@@ -14,28 +14,19 @@ use TeamMatePro\Contracts\GpsVehicleTracker\Query\RecentVehiclesData;
 final class NullVehicleRepositoryTest extends TestCase
 {
     #[Test]
-    public function itImplementsRecentVehiclesDataInterface(): void
-    {
-        $repository = new NullVehicleRepository();
-
-        $this->assertInstanceOf(RecentVehiclesData::class, $repository);
-    }
-
-    #[Test]
     public function itReturnsEmptyArrayForFindRecentData(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         $result = $repository->findRecentData();
 
-        $this->assertIsArray($result);
         $this->assertEmpty($result);
     }
 
     #[Test]
     public function itReturnsNullForFindRecentDataById(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         $result = $repository->findRecentDataById('any-id');
 
@@ -45,7 +36,7 @@ final class NullVehicleRepositoryTest extends TestCase
     #[Test]
     public function itReturnsNullForAnyIdValue(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         $this->assertNull($repository->findRecentDataById('123'));
         $this->assertNull($repository->findRecentDataById('abc-def-ghi'));
@@ -55,20 +46,9 @@ final class NullVehicleRepositoryTest extends TestCase
     }
 
     #[Test]
-    public function itConsistentlyReturnsEmptyArray(): void
-    {
-        $repository = new NullVehicleRepository();
-
-        // Call multiple times to ensure consistency
-        $this->assertEmpty($repository->findRecentData());
-        $this->assertEmpty($repository->findRecentData());
-        $this->assertEmpty($repository->findRecentData());
-    }
-
-    #[Test]
     public function itConsistentlyReturnsNull(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         // Call multiple times with different IDs to ensure consistency
         $this->assertNull($repository->findRecentDataById('id1'));
@@ -79,7 +59,7 @@ final class NullVehicleRepositoryTest extends TestCase
     #[Test]
     public function itCanBeUsedAsNullObject(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         // Simulate usage in application code where a repository is expected
         $vehicles = $repository->findRecentData();
@@ -93,33 +73,29 @@ final class NullVehicleRepositoryTest extends TestCase
     #[Test]
     public function itHandlesMultipleCalls(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         for ($i = 0; $i < 10; $i++) {
             $this->assertEmpty($repository->findRecentData());
             $this->assertNull($repository->findRecentDataById("id-{$i}"));
         }
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     #[Test]
     public function itReturnsArrayWithCorrectType(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         $result = $repository->findRecentData();
 
-        $this->assertIsArray($result);
         $this->assertCount(0, $result);
-        $this->assertSame([], $result);
     }
 
     #[Test]
     public function itWorksAsDefaultImplementation(): void
     {
         // This test demonstrates typical usage as a default/null implementation
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         // Code that expects RecentVehiclesData should work fine
         $processVehicles = function (RecentVehiclesData $repo): int {
@@ -134,7 +110,7 @@ final class NullVehicleRepositoryTest extends TestCase
     #[Test]
     public function itHandlesLongIdStrings(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         $longId = str_repeat('a', 1000);
         $result = $repository->findRecentDataById($longId);
@@ -145,7 +121,7 @@ final class NullVehicleRepositoryTest extends TestCase
     #[Test]
     public function itHandlesSpecialCharactersInId(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         $specialIds = [
             '!@#$%^&*()',
@@ -165,7 +141,7 @@ final class NullVehicleRepositoryTest extends TestCase
     #[Test]
     public function itHandlesNumericStringIds(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         $this->assertNull($repository->findRecentDataById('123'));
         $this->assertNull($repository->findRecentDataById('0'));
@@ -176,7 +152,7 @@ final class NullVehicleRepositoryTest extends TestCase
     #[Test]
     public function itHandlesUuidLikeIds(): void
     {
-        $repository = new NullVehicleRepository();
+        $repository = self::repository();
 
         $uuidLikeIds = [
             '550e8400-e29b-41d4-a716-446655440000',
@@ -187,5 +163,13 @@ final class NullVehicleRepositoryTest extends TestCase
         foreach ($uuidLikeIds as $id) {
             $this->assertNull($repository->findRecentDataById($id));
         }
+    }
+
+    /**
+     * Typed as the interface on purpose: these tests pin the null objects contract, not its body.
+     */
+    private static function repository(): RecentVehiclesData
+    {
+        return new NullVehicleRepository();
     }
 }

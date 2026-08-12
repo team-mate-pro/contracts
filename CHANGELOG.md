@@ -11,6 +11,24 @@ Wersję uznajemy za wydaną dopiero w momencie jej wdrożenia na środowisko pro
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-08-11
+
+### Changed (BREAKING)
+- `php` w `require`: `>=8.2` → `>=8.3` — porzucone wsparcie PHP 8.2 (od 2025-12 poza aktywnym wsparciem). Paczka jest testowana na 8.3, 8.4 i 8.5; `symfony/serializer` pozostaje na `^7.0`, bo jedyne użycie komponentu to atrybut `Groups`
+- `Result<T>`: parametr generyczny ograniczony do `@template T of array<int|string, mixed>|object`; `withItem()`/`withCollection()` zwracają teraz `$this` zamiast przetypowanego `self<array|object>`, a `create()` zwraca `self<array<int|string, mixed>|object>`. Kod korzystający z `Result` bez generyków działa bez zmian; miejsca deklarujące `Result<string>` lub podobny skalar wymagają korekty adnotacji
+- `Result::$data` ma teraz natywny typ `array|object` i pozostaje niezainicjalizowane do czasu ustawienia payloadu (`hasContent()` bez zmian). `getResult()` wywołany przed ustawieniem danych rzuca `Error` zamiast zwracać `null`
+- `Result` iteruje jako `IteratorAggregate<int|string, mixed>` — wcześniejsza deklaracja `<int, T>` była nieprawdziwa, bo iteracja wydaje wpisy kolekcji, a nie cały payload
+
+### Fixed
+- `TimeRange::weeksBelowDate()` — usunięty `@phpstan-ignore-next-line`; data jest konwertowana przez `DateTimeImmutable::createFromInterface()`, więc `modify()` jest wywoływane na typie, który tę metodę faktycznie ma
+
+### Added
+- Testy jednostkowe dla `TimeStampAbleTrait` (`tests/Unit/Model/`) — trait nie miał wcześniej żadnego pokrycia
+
+### Changed
+- Środowisko deweloperskie i CI przeniesione na PHP 8.5 (`docker/app/Dockerfile`); PHPUnit `^10.5` → `^11.5`, PHPStan 1.x → 2.x. Zestaw testów i analiza statyczna zweryfikowane na 8.3, 8.4 i 8.5 (CI uruchamia je na 8.5)
+- Testy oczyszczone z asercji tautologicznych (m.in. `assertInstanceOf` na wartościach o znanym typie, atrapy `assertTrue(true)` zastąpione `expectNotToPerformAssertions()`); testy enumów przepisane na data providery. Analiza statyczna przechodzi na `level: max` bez baseline i bez `ignoreErrors`
+
 ## [2.0.0] - 2026-05-27
 
 ### Removed (BREAKING)

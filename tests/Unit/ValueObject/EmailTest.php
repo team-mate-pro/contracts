@@ -175,14 +175,6 @@ final class EmailTest extends TestCase
     }
 
     #[Test]
-    public function itImplementsStringableInterface(): void
-    {
-        $email = new Email('user@example.com');
-
-        $this->assertInstanceOf(\Stringable::class, $email);
-    }
-
-    #[Test]
     #[DataProvider('validEmailsProvider')]
     public function itAcceptsValidEmails(string $emailAddress, string $expectedNormalized): void
     {

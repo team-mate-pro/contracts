@@ -22,7 +22,6 @@ final class EventsAwareTraitTest extends TestCase
 
         $events = $entity->pullEvents();
 
-        $this->assertIsArray($events);
         $this->assertEmpty($events);
     }
 

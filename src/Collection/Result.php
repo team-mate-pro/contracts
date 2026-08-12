@@ -11,15 +11,20 @@ use Traversable;
 use function is_iterable;
 
 /**
- * @template T
- * @implements IteratorAggregate<int, T>
+ * Iteration always yields the individual entries of the payload, never the payload itself,
+ * so the iterator's value type is deliberately wider than T.
+ *
+ * @template T of array<int|string, mixed>|object
+ * @implements IteratorAggregate<int|string, mixed>
  */
 final class Result implements IteratorAggregate
 {
     /**
+     * Left uninitialized on purpose: `hasContent()` distinguishes "no payload" from "payload set".
+     *
      * @var T $data
      */
-    private $data;
+    private array|object $data;
 
     /** @var 'item'|'collection' */
     private string $itemType = 'item';
@@ -38,7 +43,7 @@ final class Result implements IteratorAggregate
     }
 
     /**
-     * @return self<T>
+     * @return self<array<int|string, mixed>|object>
      */
     public static function create(ResultType $type = ResultType::SUCCESS, ?string $message = null): self
     {
@@ -46,29 +51,27 @@ final class Result implements IteratorAggregate
     }
 
     /**
-     * @param array<string|int, mixed>|object $item
-     * @return self<array<string|int, mixed>|object>
+     * @param T&(array<int|string, mixed>|object) $item
+     * @return $this
      */
     public function withItem(array|object $item): self
     {
-        /** @var self<array<string|int, mixed>|object> $self */
-        $self = $this;
-        $self->data = $item;
-        $self->itemType = 'item';
-        return $self;
+        $this->data = $item;
+        $this->itemType = 'item';
+
+        return $this;
     }
 
     /**
-     * @param array<int|string, mixed> $collection
-     * @return self<array<string|int, mixed>|object>
+     * @param T&array<int|string, mixed> $collection
+     * @return $this
      */
     public function withCollection(array $collection): self
     {
-        /** @var self<array<string|int, mixed>|object> $self */
-        $self = $this;
-        $self->data = $collection;
-        $self->itemType = 'collection';
-        return $self;
+        $this->data = $collection;
+        $this->itemType = 'collection';
+
+        return $this;
     }
 
     /**
@@ -100,11 +103,14 @@ final class Result implements IteratorAggregate
     }
 
     /**
-     * @return T
+     * Returns null when no payload was set — a result carrying only a type and a message
+     * (SUCCESS_NO_CONTENT, a failure with an error code) is a normal case.
+     *
+     * @return T|null
      */
     public function getResult()
     {
-        return $this->data;
+        return $this->data ?? null;
     }
 
     /**
@@ -126,7 +132,7 @@ final class Result implements IteratorAggregate
     }
 
     /**
-     * @return Traversable<int, T>
+     * @return Traversable<int|string, mixed>
      */
     public function getIterator(): Traversable
     {

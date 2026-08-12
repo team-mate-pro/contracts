@@ -202,20 +202,6 @@ final class AddressTest extends TestCase
         $this->assertSame('PL', $address->getCountry());
 
         // Readonly class ensures immutability
-        $this->assertTrue(true);
-    }
-
-    #[Test]
-    public function itImplementsStringableInterface(): void
-    {
-        $address = new Address(
-            street: 'Main Street 123',
-            city: 'Warsaw',
-            zipCode: '00-001',
-            country: 'PL'
-        );
-
-        $this->assertInstanceOf(\Stringable::class, $address);
     }
 
     #[Test]

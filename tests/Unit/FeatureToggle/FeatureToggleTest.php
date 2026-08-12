@@ -16,14 +16,6 @@ use TeamMatePro\Contracts\FeatureToggle\FeatureToggleStatus;
 final class FeatureToggleTest extends TestCase
 {
     #[Test]
-    public function itImplementsFeatureToggleInterface(): void
-    {
-        $toggle = new FeatureToggle('test-feature');
-
-        $this->assertInstanceOf(FeatureToggleInterface::class, $toggle);
-    }
-
-    #[Test]
     public function itCreatesFeatureToggleWithDefaultEnabledStatus(): void
     {
         $toggle = new FeatureToggle('test-feature');

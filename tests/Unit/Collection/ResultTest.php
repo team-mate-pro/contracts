@@ -55,12 +55,18 @@ final class ResultTest extends TestCase
             ['id' => 2],
         ]);
 
-        $new = $old->map(
-            fn(array $items) => array_map(
-                fn(array $item) => ['id' => $item['id'], 'doubled' => $item['id'] * 2],
-                $items,
-            ),
-        );
+        $new = $old->map(static function (mixed $items): array {
+            $mapped = [];
+
+            foreach ((array)$items as $item) {
+                $item = (array)$item;
+                $id = $item['id'];
+                assert(is_int($id));
+                $mapped[] = ['id' => $id, 'doubled' => $id * 2];
+            }
+
+            return $mapped;
+        });
 
         $this->assertEquals([['id' => 1], ['id' => 2]], $old->getResult());
         $this->assertEquals(
@@ -77,7 +83,12 @@ final class ResultTest extends TestCase
             ->withMeta('count', 1)
             ->withErrorCode('E_NONE');
 
-        $new = $old->map(fn(array $i) => ['n' => $i['n'] * 10]);
+        $new = $old->map(static function (mixed $i): array {
+            $n = ((array)$i)['n'];
+            assert(is_int($n));
+
+            return ['n' => $n * 10];
+        });
 
         $this->assertSame(['count' => 1], $new->getMeta());
         $this->assertSame('E_NONE', $new->getErrorCode());

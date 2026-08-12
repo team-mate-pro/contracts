@@ -121,7 +121,6 @@ final class CoordinatesTest extends TestCase
         $this->assertSame(12.3, $coordinates->getLongitude());
 
         // Attempting to modify would cause a PHP error in readonly class
-        $this->assertTrue(true); // Just verify it's readonly by class declaration
     }
 
     #[Test]

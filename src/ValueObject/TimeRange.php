@@ -38,8 +38,7 @@ final readonly class TimeRange implements TimeRangeInterface
 
     public static function weeksBelowDate(DateTimeInterface $date, int $weeks): self
     {
-        /** @phpstan-ignore-next-line */
-        $start = $date->modify("-$weeks weeks");
+        $start = DateTimeImmutable::createFromInterface($date)->modify("-$weeks weeks");
         return new self($start, $date);
     }
 

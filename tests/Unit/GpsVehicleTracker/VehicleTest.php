@@ -192,7 +192,6 @@ final class VehicleTest extends TestCase
             date: new DateTimeImmutable()
         );
 
-        $this->assertIsArray($vehicle->getMetaData());
         $this->assertEmpty($vehicle->getMetaData());
     }
 
@@ -237,7 +236,6 @@ final class VehicleTest extends TestCase
         $this->assertSame(60, $vehicle->getSpeed());
 
         // Properties are readonly by constructor declaration - no way to modify them
-        $this->assertTrue(true);
     }
 
     #[Test]
@@ -252,7 +250,6 @@ final class VehicleTest extends TestCase
             date: $dateTime
         );
 
-        $this->assertInstanceOf(DateTimeInterface::class, $vehicle->getDate());
         $this->assertSame('2025-10-29', $vehicle->getDate()->format('Y-m-d'));
     }
 

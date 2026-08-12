@@ -14,33 +14,6 @@ use TeamMatePro\Contracts\ValueObject\Country;
 final class CountryTest extends TestCase
 {
     #[Test]
-    public function itHasPolandCode(): void
-    {
-        $poland = Country::PL;
-
-        $this->assertSame('PL', $poland->value);
-        $this->assertSame('Poland', $poland->getCountryName());
-    }
-
-    #[Test]
-    public function itHasUnitedStatesCode(): void
-    {
-        $unitedStates = Country::US;
-
-        $this->assertSame('US', $unitedStates->value);
-        $this->assertSame('United States', $unitedStates->getCountryName());
-    }
-
-    #[Test]
-    public function itHasGermanyCode(): void
-    {
-        $germany = Country::DE;
-
-        $this->assertSame('DE', $germany->value);
-        $this->assertSame('Germany', $germany->getCountryName());
-    }
-
-    #[Test]
     public function allCountriesHaveValidTwoLetterCodes(): void
     {
         foreach (Country::cases() as $country) {
@@ -61,25 +34,7 @@ final class CountryTest extends TestCase
                 $name,
                 sprintf('Country %s has empty name', $country->value)
             );
-            $this->assertIsString($name);
         }
-    }
-
-    #[Test]
-    public function itCanBeCreatedFromString(): void
-    {
-        $poland = Country::from('PL');
-
-        $this->assertSame(Country::PL, $poland);
-        $this->assertSame('Poland', $poland->getCountryName());
-    }
-
-    #[Test]
-    public function tryFromReturnsNullForInvalidCode(): void
-    {
-        $result = Country::tryFrom('XX');
-
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -98,7 +53,28 @@ final class CountryTest extends TestCase
     {
         $country = Country::from($code);
 
+        $this->assertSame($code, $country->value);
         $this->assertSame($expectedName, $country->getCountryName());
+    }
+
+    #[Test]
+    #[DataProvider('unknownCountryCodeProvider')]
+    public function tryFromReturnsNullForUnknownCodes(string $code): void
+    {
+        $this->assertNull(Country::tryFrom($code));
+    }
+
+    /**
+     * @return array<string, array{0: string}>
+     */
+    public static function unknownCountryCodeProvider(): array
+    {
+        return [
+            'not a country' => ['XX'],
+            'empty string' => [''],
+            'lowercase' => ['pl'],
+            'three letters' => ['POL'],
+        ];
     }
 
     /**

@@ -17,22 +17,6 @@ use TeamMatePro\Contracts\FeatureToggle\QuotableFeatureToggleInterface;
 final class QuotableFeatureToggleTest extends TestCase
 {
     #[Test]
-    public function itImplementsQuotableFeatureToggleInterface(): void
-    {
-        $toggle = new QuotableFeatureToggle('test-feature');
-
-        $this->assertInstanceOf(QuotableFeatureToggleInterface::class, $toggle);
-    }
-
-    #[Test]
-    public function itImplementsFeatureToggleInterface(): void
-    {
-        $toggle = new QuotableFeatureToggle('test-feature');
-
-        $this->assertInstanceOf(FeatureToggleInterface::class, $toggle);
-    }
-
-    #[Test]
     public function itCreatesQuotableFeatureToggleWithDefaults(): void
     {
         $toggle = new QuotableFeatureToggle('test-feature');

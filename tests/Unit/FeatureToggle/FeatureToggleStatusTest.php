@@ -14,39 +14,10 @@ use TeamMatePro\Contracts\FeatureToggle\FeatureToggleStatus;
 final class FeatureToggleStatusTest extends TestCase
 {
     #[Test]
-    public function itHasEnabledCase(): void
+    #[DataProvider('statusValueProvider')]
+    public function itExposesTheExpectedBackingValue(string $value, FeatureToggleStatus $status): void
     {
-        $this->assertSame('enabled', FeatureToggleStatus::Enabled->value);
-    }
-
-    #[Test]
-    public function itHasDisabledCase(): void
-    {
-        $this->assertSame('disabled', FeatureToggleStatus::Disabled->value);
-    }
-
-    #[Test]
-    public function itHasUnpaidCase(): void
-    {
-        $this->assertSame('unpaid', FeatureToggleStatus::Unpaid->value);
-    }
-
-    #[Test]
-    public function itHasUnavailableCase(): void
-    {
-        $this->assertSame('unavailable', FeatureToggleStatus::Unavailable->value);
-    }
-
-    #[Test]
-    public function itHasQuoteReachedCase(): void
-    {
-        $this->assertSame('quotaReached', FeatureToggleStatus::QuoteReached->value);
-    }
-
-    #[Test]
-    public function itIsBackedByString(): void
-    {
-        $this->assertIsString(FeatureToggleStatus::Enabled->value);
+        $this->assertSame($value, $status->value);
     }
 
     #[Test]
@@ -68,39 +39,33 @@ final class FeatureToggleStatusTest extends TestCase
     }
 
     #[Test]
-    public function itReturnsNullForInvalidValueWithTryFrom(): void
+    #[DataProvider('unknownValueProvider')]
+    public function itReturnsNullForUnknownValues(string $value): void
     {
-        $status = FeatureToggleStatus::tryFrom('invalid-status');
-
-        $this->assertNull($status);
+        $this->assertNull(FeatureToggleStatus::tryFrom($value));
     }
 
+    /**
+     * Guards the enum definition: adding, removing or renaming a case breaks this test.
+     *
+     * @param list<string> $expected
+     */
     #[Test]
-    #[DataProvider('allStatusCasesProvider')]
-    public function itSupportsAllDefinedCases(FeatureToggleStatus $status): void
+    #[DataProvider('enumDefinitionProvider')]
+    public function itDefinesExactlyTheExpectedCases(string $property, array $expected): void
     {
-        $this->assertInstanceOf(FeatureToggleStatus::class, $status);
+        $this->assertSame($expected, array_column(FeatureToggleStatus::cases(), $property));
     }
 
-    #[Test]
-    public function itHasExactlyFiveCases(): void
+    /**
+     * @return array<string, array{0: string, 1: list<string>}>
+     */
+    public static function enumDefinitionProvider(): array
     {
-        $cases = FeatureToggleStatus::cases();
-
-        $this->assertCount(5, $cases);
-    }
-
-    #[Test]
-    public function itHasAllExpectedCases(): void
-    {
-        $cases = FeatureToggleStatus::cases();
-        $caseNames = array_map(fn($case) => $case->name, $cases);
-
-        $this->assertContains('Enabled', $caseNames);
-        $this->assertContains('Disabled', $caseNames);
-        $this->assertContains('Unpaid', $caseNames);
-        $this->assertContains('Unavailable', $caseNames);
-        $this->assertContains('QuoteReached', $caseNames);
+        return [
+            'case names' => ['name', ['Enabled', 'Disabled', 'Unpaid', 'Unavailable', 'QuoteReached']],
+            'backing values' => ['value', ['enabled', 'disabled', 'unpaid', 'unavailable', 'quotaReached']],
+        ];
     }
 
     #[Test]
@@ -130,51 +95,19 @@ final class FeatureToggleStatusTest extends TestCase
     }
 
     #[Test]
-    public function itCanBeUsedInSwitchStatement(): void
+    #[DataProvider('allStatusCasesProvider')]
+    public function everyCaseHasANonEmptyBackingValue(FeatureToggleStatus $status): void
     {
-        $status = FeatureToggleStatus::QuoteReached;
-        $result = '';
-
-        switch ($status) {
-            case FeatureToggleStatus::Enabled:
-                $result = 'enabled';
-                break;
-            case FeatureToggleStatus::Disabled:
-                $result = 'disabled';
-                break;
-            case FeatureToggleStatus::Unpaid:
-                $result = 'unpaid';
-                break;
-            case FeatureToggleStatus::Unavailable:
-                $result = 'unavailable';
-                break;
-            case FeatureToggleStatus::QuoteReached:
-                $result = 'quota reached';
-                break;
-        }
-
-        $this->assertSame('quota reached', $result);
+        $this->assertNotEmpty($status->value);
     }
 
     #[Test]
     #[DataProvider('allStatusCasesProvider')]
-    public function itCanBeSerializedToString(FeatureToggleStatus $status): void
+    public function itPreservesValueAfterSerialization(FeatureToggleStatus $original): void
     {
-        $value = $status->value;
-
-        $this->assertIsString($value);
-        $this->assertNotEmpty($value);
-    }
-
-    #[Test]
-    public function itPreservesValueAfterSerialization(): void
-    {
-        $original = FeatureToggleStatus::Enabled;
-        $serialized = serialize($original);
-        $unserialized = unserialize($serialized);
+        $unserialized = unserialize(serialize($original));
 
         $this->assertSame($original, $unserialized);
-        $this->assertSame($original->value, $unserialized->value);
     }
 
     /**
@@ -188,6 +121,19 @@ final class FeatureToggleStatusTest extends TestCase
             'unpaid' => ['unpaid', FeatureToggleStatus::Unpaid],
             'unavailable' => ['unavailable', FeatureToggleStatus::Unavailable],
             'quotaReached' => ['quotaReached', FeatureToggleStatus::QuoteReached],
+        ];
+    }
+
+    /**
+     * @return array<string, array{0: string}>
+     */
+    public static function unknownValueProvider(): array
+    {
+        return [
+            'unknown label' => ['invalid-status'],
+            'empty string' => [''],
+            'wrong casing' => ['Enabled'],
+            'trailing space' => ['enabled '],
         ];
     }
 

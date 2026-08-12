@@ -14,21 +14,25 @@ use TeamMatePro\Contracts\ValueObject\Currency;
 final class CurrencyTest extends TestCase
 {
     #[Test]
-    public function itCanBeCreatedFromEnumCase(): void
+    #[DataProvider('currencyCodeProvider')]
+    public function itIsCreatedFromItsBackingCode(string $code): void
     {
-        $currency = Currency::USD;
+        $currency = Currency::from($code);
 
-        $this->assertSame('USD', $currency->value);
-        $this->assertInstanceOf(Currency::class, $currency);
+        $this->assertSame($code, $currency->value);
     }
 
-    #[Test]
-    public function itCanBeCreatedFromString(): void
+    /**
+     * @return array<string, array{0: string}>
+     */
+    public static function currencyCodeProvider(): array
     {
-        $currency = Currency::from('EUR');
-
-        $this->assertSame(Currency::EUR, $currency);
-        $this->assertSame('EUR', $currency->value);
+        return [
+            'USD' => ['USD'],
+            'EUR' => ['EUR'],
+            'GBP' => ['GBP'],
+            'PLN' => ['PLN'],
+        ];
     }
 
     #[Test]
@@ -62,22 +66,17 @@ final class CurrencyTest extends TestCase
 
         // Verify all cases are Currency instances
         foreach ($cases as $currency) {
-            $this->assertInstanceOf(Currency::class, $currency);
-            $this->assertIsString($currency->value);
         }
     }
 
     #[Test]
     public function itSupportsMajorCurrencies(): void
     {
+        /** @var list<string> $majorCurrencies */
         $majorCurrencies = ['USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUD', 'CNY'];
 
         foreach ($majorCurrencies as $code) {
-            $currency = Currency::from($code);
-            $this->assertInstanceOf(Currency::class, $currency);
-            $this->assertIsString($currency->getSymbol());
-            $this->assertIsString($currency->getName());
-            $this->assertIsInt($currency->getDecimalPlaces());
+            $this->assertSame($code, Currency::from($code)->value);
         }
     }
 
@@ -87,37 +86,15 @@ final class CurrencyTest extends TestCase
         $cryptos = [Currency::BTC, Currency::ETH, Currency::USDT, Currency::USDC];
 
         foreach ($cryptos as $crypto) {
-            $this->assertInstanceOf(Currency::class, $crypto);
             $this->assertSame(8, $crypto->getDecimalPlaces());
         }
     }
 
     #[Test]
-    public function itCanBeComparedForEquality(): void
+    #[DataProvider('currencyCodeProvider')]
+    public function sameCodeAlwaysYieldsTheSameInstance(string $code): void
     {
-        $usd1 = Currency::USD;
-        $usd2 = Currency::USD;
-        $eur = Currency::EUR;
-
-        $this->assertSame($usd1, $usd2);
-        $this->assertNotSame($usd1, $eur);
-    }
-
-    #[Test]
-    public function itCanBeUsedInMatchExpressions(): void
-    {
-        $currencies = [Currency::USD, Currency::EUR, Currency::JPY, Currency::GBP];
-
-        foreach ($currencies as $currency) {
-            $result = match ($currency) {
-                Currency::USD => 'US Dollar',
-                Currency::EUR => 'Euro',
-                Currency::GBP => 'British Pound',
-                default => 'Other Currency',
-            };
-
-            $this->assertIsString($result);
-        }
+        $this->assertSame(Currency::from($code), Currency::from($code));
     }
 
     #[Test]
@@ -125,7 +102,6 @@ final class CurrencyTest extends TestCase
     {
         foreach (Currency::cases() as $currency) {
             $symbol = $currency->getSymbol();
-            $this->assertIsString($symbol);
             $this->assertNotEmpty($symbol);
         }
     }
@@ -135,7 +111,6 @@ final class CurrencyTest extends TestCase
     {
         foreach (Currency::cases() as $currency) {
             $name = $currency->getName();
-            $this->assertIsString($name);
             $this->assertNotEmpty($name);
         }
     }
@@ -145,7 +120,6 @@ final class CurrencyTest extends TestCase
     {
         foreach (Currency::cases() as $currency) {
             $decimalPlaces = $currency->getDecimalPlaces();
-            $this->assertIsInt($decimalPlaces);
             $this->assertGreaterThanOrEqual(0, $decimalPlaces);
             $this->assertLessThanOrEqual(8, $decimalPlaces);
         }

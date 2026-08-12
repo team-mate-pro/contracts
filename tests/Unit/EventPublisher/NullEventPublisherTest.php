@@ -18,22 +18,13 @@ use TeamMatePro\Contracts\EventPublisher\NullEventPublisher;
 final class NullEventPublisherTest extends TestCase
 {
     #[Test]
-    public function itImplementsEventsPublisherInterface(): void
-    {
-        $publisher = new NullEventPublisher();
-
-        $this->assertInstanceOf(EventsPublisherInterface::class, $publisher);
-    }
-
-    #[Test]
     public function itPublishesWithoutThrowingException(): void
     {
+        $this->expectNotToPerformAssertions();
         $publisher = new NullEventPublisher();
         $entity = $this->createEntityWithEvents(2);
 
         $publisher->publish($entity);
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     #[Test]
@@ -79,28 +70,27 @@ final class NullEventPublisherTest extends TestCase
     #[Test]
     public function itHandlesEmptyEntityList(): void
     {
+        $this->expectNotToPerformAssertions();
         $publisher = new NullEventPublisher();
 
         $publisher->publish();
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     #[Test]
     public function itPublishesEventWithoutThrowingException(): void
     {
+        $this->expectNotToPerformAssertions();
         $publisher = new NullEventPublisher();
         $event = new \stdClass();
         $event->name = 'test-event';
 
         $publisher->publishEvent($event);
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     #[Test]
     public function itPublishesMultipleEvents(): void
     {
+        $this->expectNotToPerformAssertions();
         $publisher = new NullEventPublisher();
 
         $event1 = new \stdClass();
@@ -113,23 +103,21 @@ final class NullEventPublisherTest extends TestCase
         $event3->name = 'event3';
 
         $publisher->publishEvent($event1, $event2, $event3);
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     #[Test]
     public function itPublishesEventWithNoEvents(): void
     {
+        $this->expectNotToPerformAssertions();
         $publisher = new NullEventPublisher();
 
         $publisher->publishEvent();
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     #[Test]
     public function itHandlesDifferentEventTypes(): void
     {
+        $this->expectNotToPerformAssertions();
         $publisher = new NullEventPublisher();
 
         $stdEvent = new \stdClass();
@@ -139,8 +127,6 @@ final class NullEventPublisherTest extends TestCase
         };
 
         $publisher->publishEvent($stdEvent, $arrayObjectEvent, $customEvent);
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     #[Test]
@@ -165,6 +151,7 @@ final class NullEventPublisherTest extends TestCase
     #[Test]
     public function itHandlesMixedPublishCalls(): void
     {
+        $this->expectNotToPerformAssertions();
         $publisher = new NullEventPublisher();
 
         $entity1 = $this->createEntityWithEvents(2);
@@ -178,13 +165,12 @@ final class NullEventPublisherTest extends TestCase
         $publisher->publishEvent($event1);
         $publisher->publish();
         $publisher->publishEvent();
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     #[Test]
     public function itCanBeCalledMultipleTimes(): void
     {
+        $this->expectNotToPerformAssertions();
         $publisher = new NullEventPublisher();
 
         for ($i = 0; $i < 10; $i++) {
@@ -197,8 +183,6 @@ final class NullEventPublisherTest extends TestCase
             $event->id = $i;
             $publisher->publishEvent($event);
         }
-
-        $this->assertTrue(true); // No exception thrown
     }
 
     /**
